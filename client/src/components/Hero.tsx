@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import profilePhoto from "../assets/profile-photo.jpeg";
 
 const Hero = () => {
   const scrollToProjects = () => {
@@ -61,7 +62,16 @@ const Hero = () => {
           transition={{ delay: 0.4, duration: 0.6 }}
         >
           <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-8 w-full max-w-md">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-6">
+              {/* Profile Photo */}
+              <div className="flex justify-center">
+                <img 
+                  src={profilePhoto} 
+                  alt="Happy Swaraj" 
+                  className="w-32 h-32 object-cover rounded-full border-4 border-blue-500 shadow-lg"
+                />
+              </div>
+              
               <div className="space-y-2">
                 <div className="text-sm text-gray-500">Location</div>
                 <div className="font-medium">Saran, Bihar 841424</div>
