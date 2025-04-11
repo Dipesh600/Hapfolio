@@ -62,9 +62,12 @@ export async function sendContactNotification(contact: Contact): Promise<string 
     console.log('Contact notification email sent:', info.messageId);
     // Preview URL only available when using Ethereal
     const previewUrl = nodemailer.getTestMessageUrl(info);
-    console.log('Preview URL: %s', previewUrl);
+    if (previewUrl) {
+      console.log('Preview URL: %s', previewUrl);
+      return typeof previewUrl === 'string' ? previewUrl : String(previewUrl);
+    }
     
-    return previewUrl;
+    return null;
   } catch (error) {
     console.error('Error sending contact notification email:', error);
     return null;

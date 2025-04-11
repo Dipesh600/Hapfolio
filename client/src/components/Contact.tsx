@@ -7,6 +7,20 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
+// Type for the response from the contact API
+interface ContactResponse {
+  message: string;
+  contact: {
+    id: number;
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+    createdAt?: string | Date;
+  };
+  emailSent: boolean;
+}
+
 import {
   Form,
   FormControl,
@@ -44,12 +58,16 @@ const Contact = () => {
 
   const mutation = useMutation({
     mutationFn: (data: FormValues) => {
-      return apiRequest("POST", "/api/contact", data);
+      return apiRequest<ContactResponse>("POST", "/api/contact", data);
     },
-    onSuccess: () => {
+    onSuccess: (response: ContactResponse) => {
+      const emailSent = response.emailSent;
+      
       toast({
         title: "Message sent successfully!",
-        description: "Thanks for reaching out. I'll get back to you soon.",
+        description: emailSent 
+          ? "Thanks for reaching out. Happy will be notified and get back to you soon."
+          : "Thanks for reaching out. Your message was saved, but there was an issue sending the notification email.",
         variant: "default",
       });
       form.reset();

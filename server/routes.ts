@@ -4,16 +4,32 @@ import { storage } from "./storage";
 import { contactSchema } from "@shared/schema";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
+import { initializeEmailService, sendContactNotification } from "./services/emailService";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Initialize the email service when the server starts
+  await initializeEmailService();
+
   // Contact form submission route
   app.post("/api/contact", async (req, res) => {
     try {
       const contactData = contactSchema.parse(req.body);
       const savedContact = await storage.createContact(contactData);
+      
+      // Send email notification
+      const emailPreviewUrl = await sendContactNotification(savedContact);
+      
+      // Log whether email was sent successfully
+      if (emailPreviewUrl) {
+        console.log(`Contact form notification sent. Preview: ${emailPreviewUrl}`);
+      } else {
+        console.warn('Contact form submitted but email notification failed');
+      }
+      
       res.status(201).json({
         message: "Message sent successfully",
-        contact: savedContact
+        contact: savedContact,
+        emailSent: !!emailPreviewUrl
       });
     } catch (error) {
       if (error instanceof ZodError) {
