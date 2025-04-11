@@ -10,7 +10,7 @@ import { projects } from "@/data/portfolio";
 type ProjectCategory = "All" | "React Native" | "FastAPI" | "React" | "TypeScript" | "Python";
 
 const ProjectItem = ({ project, index }: { project: typeof projects[0]; index: number }) => {
-  const [location, navigate] = useLocation();
+  const [, navigate] = useLocation();
 
   return (
     <motion.div
