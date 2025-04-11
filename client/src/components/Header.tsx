@@ -18,6 +18,28 @@ const Header = () => {
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
+  
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Only handle anchor links (#)
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement) {
+        // Close mobile menu first
+        setMobileMenuOpen(false);
+        
+        // Then scroll to the element
+        setTimeout(() => {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }, 300); // Small delay to allow menu to close
+      }
+    } else if (href === '/') {
+      // If it's the home link, just close the menu
+      setMobileMenuOpen(false);
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200">
@@ -34,6 +56,7 @@ const Header = () => {
               key={item.name}
               href={item.href}
               className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+              onClick={(e) => handleNavClick(e, item.href)}
             >
               {item.name}
             </a>
@@ -72,7 +95,7 @@ const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white overflow-hidden"
+            className="md:hidden bg-white overflow-hidden shadow-md"
           >
             <div className="space-y-1 px-6 py-4 border-t border-gray-200">
               {navigation.map((item) => (
@@ -80,7 +103,7 @@ const Header = () => {
                   key={item.name}
                   href={item.href}
                   className="block py-2 text-base font-medium text-gray-700 hover:text-blue-600 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => handleNavClick(e, item.href)}
                 >
                   {item.name}
                 </a>

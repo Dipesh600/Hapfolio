@@ -11,7 +11,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-28 md:pt-32 overflow-hidden">
       <div className="absolute inset-0 z-0 bg-gradient-to-br from-blue-50 to-gray-100" />
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
