@@ -1,29 +1,47 @@
 import { motion } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
+import { 
+  SiCplusplus, 
+  SiOpenjdk, 
+  SiJavascript, 
+  SiPython, 
+  SiReact, 
+  SiNodedotjs, 
+  SiUbuntu, 
+  SiPostman, 
+  SiSelenium, 
+  SiGit, 
+  SiGithub, 
+  SiIntellijidea 
+} from "react-icons/si";
+import { VscVscode } from "react-icons/vsc";
+import { FaCode, FaLaptopCode, FaTools, FaPuzzlePiece, FaMobileAlt } from "react-icons/fa";
+import { IconType } from "react-icons";
 
 interface Skill {
   name: string;
   level: number;
   category: "Languages" | "Technologies/Frameworks" | "Tools" | "Others";
+  icon: IconType;
 }
 
 const skills: Skill[] = [
-  { name: "C++", level: 85, category: "Languages" },
-  { name: "Java", level: 80, category: "Languages" },
-  { name: "JavaScript", level: 75, category: "Languages" },
-  { name: "Python", level: 70, category: "Languages" },
-  { name: "React JS", level: 75, category: "Technologies/Frameworks" },
-  { name: "Node JS", level: 65, category: "Technologies/Frameworks" },
-  { name: "Ubuntu", level: 60, category: "Technologies/Frameworks" },
-  { name: "Postman", level: 70, category: "Technologies/Frameworks" },
-  { name: "Selenium", level: 60, category: "Technologies/Frameworks" },
-  { name: "Git", level: 80, category: "Tools" },
-  { name: "GitHub", level: 85, category: "Tools" },
-  { name: "VS Code", level: 90, category: "Tools" },
-  { name: "Intellij", level: 75, category: "Tools" },
-  { name: "Problem-Solving", level: 85, category: "Others" },
-  { name: "Responsive Web Design", level: 70, category: "Others" },
-  { name: "Scripting in Python and JavaScript", level: 65, category: "Others" },
+  { name: "C++", level: 85, category: "Languages", icon: SiCplusplus },
+  { name: "Java", level: 80, category: "Languages", icon: SiOpenjdk },
+  { name: "JavaScript", level: 75, category: "Languages", icon: SiJavascript },
+  { name: "Python", level: 70, category: "Languages", icon: SiPython },
+  { name: "React JS", level: 75, category: "Technologies/Frameworks", icon: SiReact },
+  { name: "Node JS", level: 65, category: "Technologies/Frameworks", icon: SiNodedotjs },
+  { name: "Ubuntu", level: 60, category: "Technologies/Frameworks", icon: SiUbuntu },
+  { name: "Postman", level: 70, category: "Technologies/Frameworks", icon: SiPostman },
+  { name: "Selenium", level: 60, category: "Technologies/Frameworks", icon: SiSelenium },
+  { name: "Git", level: 80, category: "Tools", icon: SiGit },
+  { name: "GitHub", level: 85, category: "Tools", icon: SiGithub },
+  { name: "VS Code", level: 90, category: "Tools", icon: VscVscode },
+  { name: "Intellij", level: 75, category: "Tools", icon: SiIntellijidea },
+  { name: "Problem-Solving", level: 85, category: "Others", icon: FaPuzzlePiece },
+  { name: "Responsive Web Design", level: 70, category: "Others", icon: FaMobileAlt },
+  { name: "Scripting in Python and JavaScript", level: 65, category: "Others", icon: FaCode },
 ];
 
 const categories = ["Languages", "Technologies/Frameworks", "Tools", "Others"] as const;
@@ -37,7 +55,10 @@ const SkillItem = ({ skill, index }: { skill: Skill; index: number }) => (
     className="mb-4"
   >
     <div className="flex justify-between items-center mb-1">
-      <span className="text-sm font-medium text-gray-700">{skill.name}</span>
+      <div className="flex items-center gap-2">
+        <skill.icon className="h-4 w-4 text-blue-600" />
+        <span className="text-sm font-medium text-gray-700">{skill.name}</span>
+      </div>
       <span className="text-xs font-medium text-gray-500">{skill.level}%</span>
     </div>
     <Progress value={skill.level} className="h-2" />
